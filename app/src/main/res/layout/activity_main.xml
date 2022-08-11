@@ -1,130 +1,108 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="32dp"
+    android:orientation="vertical"
+    android:gravity="center"
     tools:context=".MainActivity">
 
-    <TextView
-        android:id="@+id/lblSalarioBruto"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="48dp"
-        android:layout_marginTop="56dp"
-        android:text="Salario Bruto"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <EditText
-        android:id="@+id/txtSalarioBruto"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="52dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        app:layout_constraintBottom_toBottomOf="@+id/lblSalarioBruto"
-        app:layout_constraintStart_toEndOf="@+id/lblSalarioBruto"
-        app:layout_constraintTop_toTopOf="@+id/lblSalarioBruto"
-        app:layout_constraintVertical_bias="0.576" />
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginBottom="30dp"
+        android:src="@drawable/calc_logo"/>
 
     <TextView
-        android:id="@+id/lblDependentes"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="48dp"
-        android:layout_marginTop="32dp"
-        android:text="Quant dependentes"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/lblSalarioBruto" />
+        android:text="Calculadora de Salário Líquido"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        android:textColor="#1c75bc"
+        android:gravity="center"
+        android:layout_marginBottom="20dp"
+        />
 
-    <EditText
-        android:id="@+id/txtQuantDependentes"
-        android:layout_width="wrap_content"
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        app:layout_constraintBottom_toBottomOf="@+id/lblDependentes"
-        app:layout_constraintStart_toEndOf="@+id/lblDependentes"
-        app:layout_constraintTop_toTopOf="@+id/lblDependentes"
-        app:layout_constraintVertical_bias="0.461" />
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
-    <TextView
-        android:id="@+id/lblPensaoAlimenticia"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="48dp"
-        android:layout_marginTop="32dp"
-        android:text="Pensão alimentícia"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/lblDependentes" />
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/txtSalarioBruto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Salário Bruto"
+            />
 
-    <EditText
-        android:id="@+id/txtPensaoAlimenticia"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        app:layout_constraintBottom_toBottomOf="@+id/lblPensaoAlimenticia"
-        app:layout_constraintStart_toEndOf="@+id/lblPensaoAlimenticia"
-        app:layout_constraintTop_toTopOf="@+id/lblPensaoAlimenticia" />
+    </com.google.android.material.textfield.TextInputLayout>
 
-    <TextView
-        android:id="@+id/lblPlanoSaude"
-        android:layout_width="wrap_content"
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="48dp"
-        android:layout_marginTop="32dp"
-        android:text="Plano de saúde"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/lblPensaoAlimenticia" />
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
-    <EditText
-        android:id="@+id/txtPlanoSaude"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        app:layout_constraintBottom_toBottomOf="@+id/lblPlanoSaude"
-        app:layout_constraintStart_toEndOf="@+id/lblPlanoSaude"
-        app:layout_constraintTop_toTopOf="@+id/lblPlanoSaude"
-        app:layout_constraintVertical_bias="0.307" />
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/txtQuantDependentes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Quant Dependentes"/>
 
-    <TextView
-        android:id="@+id/lblOutrosDescontos"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="48dp"
-        android:layout_marginTop="32dp"
-        android:text="Outros descontos"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/lblPlanoSaude" />
+    </com.google.android.material.textfield.TextInputLayout>
 
-    <EditText
-        android:id="@+id/txtOutrosDescontos"
-        android:layout_width="wrap_content"
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        app:layout_constraintBottom_toBottomOf="@+id/lblOutrosDescontos"
-        app:layout_constraintStart_toEndOf="@+id/lblOutrosDescontos"
-        app:layout_constraintTop_toTopOf="@+id/lblOutrosDescontos" />
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/txtPensaoAlimenticia"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Pensão Alimentícia"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/txtPlanoSaude"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Plano de Saúde"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/txtOutrosDescontos"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Outros Descostos"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
 
     <Button
         android:id="@+id/btnCalcular"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="88dp"
+        android:layout_marginTop="30dp"
         android:text="calcular"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.501"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/lblOutrosDescontos" />
+        />
 
+    <Button
+        android:id="@+id/btnApagar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Apagar Resultados"/>
 
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>
