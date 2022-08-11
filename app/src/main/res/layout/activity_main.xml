@@ -11,19 +11,19 @@
     <ImageView
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:layout_marginBottom="30dp"
-        android:src="@drawable/calc_logo"/>
+        android:layout_marginBottom="10dp"
+        android:src="@drawable/calc_logo" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Calculadora de Salário Líquido"
-        android:textSize="30sp"
-        android:textStyle="bold"
-        android:textColor="#1c75bc"
-        android:gravity="center"
         android:layout_marginBottom="20dp"
-        />
+        android:gravity="center"
+        android:text="Calculadora de Salário Líquido"
+        android:textAlignment="center"
+        android:textColor="#105C58"
+        android:textSize="30sp"
+        android:textStyle="bold" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
@@ -96,13 +96,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
-        android:text="calcular"
-        />
+        android:backgroundTint="#FFB317"
+        android:text="calcular" />
 
     <Button
         android:id="@+id/btnApagar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Apagar Resultados"/>
+        android:backgroundTint="#FFB317"
+        android:text="Apagar Resultados" />
 
 </LinearLayout>
