@@ -4,6 +4,9 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
+import calculaIR
+import calculaInss
+import java.lang.Float.parseFloat
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,13 +28,18 @@ class MainActivity : AppCompatActivity() {
         val txtTotalDesconto = this.findViewById<Button>(R.id.txtTotalDesconto)
         val txtPorcentagemDesconto = this.findViewById<Button>(R.id.txtPorcentagemDesconto)
 
+        val salarioBruto = parseFloat(txtSalarioBruto.toString())
+        val pensaoAlimenticia = parseFloat(txtPensaoAlimenticia.toString())
+        val quantDependentes = parseFloat(txtQuantDependentes.toString())
 
 
-        //       desenvolver função calcular INSS
+        //calculo salário liquido
+        val inss = calculaInss(salarioBruto)
+        val ir = calculaIR(salarioBruto)
+        val salarioLiquido = salarioBruto - inss - ir - pensaoAlimenticia - (quantDependentes * 189.59F)
 
-        //       desenvolver função calcular IR
 
-        //       Fazer a transição para ResultActivity
+        //Fazer a transição para ResultActivity
 
     }
 }
