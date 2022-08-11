@@ -28,9 +28,16 @@ class MainActivity : AppCompatActivity() {
         val txtTotalDesconto = this.findViewById<Button>(R.id.txtTotalDesconto)
         val txtPorcentagemDesconto = this.findViewById<Button>(R.id.txtPorcentagemDesconto)
 
-        val salarioBruto = parseFloat(txtSalarioBruto.toString())
-        val pensaoAlimenticia = parseFloat(txtPensaoAlimenticia.toString())
-        val quantDependentes = parseFloat(txtQuantDependentes.toString())
+        var salarioBruto = txtSalarioBruto.getText().toString().toFloatOrNull()
+        if (salarioBruto == null) {salarioBruto = 0.0F}
+        var pensaoAlimenticia = txtPensaoAlimenticia.getText().toString().toFloatOrNull()
+        if (pensaoAlimenticia == null) {pensaoAlimenticia = 0.0F}
+        var quantDependentes = txtQuantDependentes.getText().toString().toFloatOrNull()
+        if (quantDependentes == null) {quantDependentes = 0.0F}
+
+//        val salarioBruto = parseFloat(txtSalarioBruto.toString())
+//        val pensaoAlimenticia = parseFloat(txtPensaoAlimenticia.toString())
+//        val quantDependentes = parseFloat(txtQuantDependentes.toString())
 
 
         //calculo salário liquido
