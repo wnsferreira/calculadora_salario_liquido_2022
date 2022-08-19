@@ -1,4 +1,5 @@
 package com.infnet.calc_salario_app
+import android.content.Intent
 import java.io.File
 import java.io.FileOutputStream
 import java.util.*
@@ -7,14 +8,18 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
+import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import calculaIR
 import calculaInss
+import calculaSalarioLiquido
 import java.io.IOException
 import java.io.OutputStream
 
 class MainActivity : AppCompatActivity() {
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -48,20 +53,16 @@ class MainActivity : AppCompatActivity() {
 
 // --------------------------------------------------------------------------------------
 //      Entrada de dados
-        val txtSalarioBruto = this.findViewById<TextView>(R.id.txtSalarioBruto)
-        val txtQuantDependentes = this.findViewById<TextView>(R.id.txtQuantDependentes)
-        val txtPensaoAlimenticia = this.findViewById<TextView>(R.id.txtPensaoAlimenticia)
-        val txtPlanoSaude = this.findViewById<TextView>(R.id.txtPlanoSaude)
-        val txtOutrosDescontos = this.findViewById<TextView>(R.id.txtOutrosDescontos)
+        val txtSalarioBruto = this.findViewById<EditText>(R.id.txtSalarioBruto)
+        val txtQuantDependentes = this.findViewById<EditText>(R.id.txtQuantDependentes)
+        val txtPensaoAlimenticia = this.findViewById<EditText>(R.id.txtPensaoAlimenticia)
+        val txtPlanoSaude = this.findViewById<EditText>(R.id.txtPlanoSaude)
+        val txtOutrosDescontos = this.findViewById<EditText>(R.id.txtOutrosDescontos)
         val btnCalcular = this.findViewById<Button>(R.id.btnCalcular)
 
 // ----------------------------------------------------------------------------------------
-//      Dados que serão exibidos na ResultActivity
-        val txtSalarioLiquido = this.findViewById<Button>(R.id.txtSalarioLiquido)
-        val txtTotalDesconto = this.findViewById<Button>(R.id.txtTotalDesconto)
-        val txtPorcentagemDesconto = this.findViewById<Button>(R.id.txtPorcentagemDesconto)
 
-        var salarioBruto = txtSalarioBruto.getText().toString().toFloatOrNull()
+        var salarioBruto = txtSalarioBruto.text.toString().toFloatOrNull()
         if (salarioBruto == null) {
             salarioBruto = 0.0F
         }
@@ -88,12 +89,25 @@ class MainActivity : AppCompatActivity() {
         // Criar novo arquivo ou gravar em arquivo já existente se o mesmo já existir
         val fileName = "calc_salario_app_memo"
         var file = File(getExternalFilesDir(null), "$fileName.crd")
-        if (file == null) {
-            file = createFile(fileName)}
+//        if (file == null) {
+//            file = createFile(fileName)}
 
-            // Fazer a transição para ResultActivity levando dados resultates para lá
+
+//        ----------------------------------------------------------------------------------
+        // Fazer a transição para ResultActivity levando dados resultates para lá
+        btnCalcular.setOnClickListener{
+
+            val resultIntent = Intent(this,ResultActivity::class.java)
+            resultIntent.putExtra("salarioLiquido", salarioLiquido)
+
+            Log.i("TP7", "SalarioLiquido $salarioLiquido ")
+
+            startActivity(resultIntent)
+        }
 
 
             // Botão para visualizar dados gravados no passado
     }
+
+
 }

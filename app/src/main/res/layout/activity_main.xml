@@ -96,8 +96,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
-        android:text="calcular"
-        />
+        android:text="calcular" />
 
     <Button
         android:id="@+id/btnApagar"
