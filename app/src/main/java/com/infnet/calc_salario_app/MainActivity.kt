@@ -79,7 +79,7 @@ class MainActivity : AppCompatActivity() {
         val inss = calculaInss(salarioBruto)
         val ir = calculaIR(salarioBruto)
         val salarioLiquido =
-            salarioBruto - inss - ir - pensaoAlimenticia - (quantDependentes * 189.59F)
+            (salarioBruto - inss - ir - pensaoAlimenticia - (quantDependentes * 189.59F)).toString()
 
 
         // Pedir permissão para gravar
