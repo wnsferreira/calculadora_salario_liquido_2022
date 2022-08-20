@@ -15,7 +15,7 @@ class SplashActivity : AppCompatActivity() {
         supportActionBar?.hide()
         lifecycleScope.launch{
             while (true) {
-                delay(4000)
+                delay(1000)
                 startActivity(Intent(this@SplashActivity, MainActivity::class.java))
                 finish()
                 break

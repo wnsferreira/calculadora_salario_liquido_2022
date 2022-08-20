@@ -18,7 +18,11 @@ class ResultActivity : AppCompatActivity() {
 
 
         val salarioLiquido = intent.getStringExtra("salarioLiquido")
+        val totalDesconto = intent.getStringExtra("totalDescontos")
+        val percentualDesconto = intent.getStringExtra("percentualDesconto")
         txtSalarioLiquido.text = salarioLiquido
+        txtTotalDesconto.text=totalDesconto
+        txtPorcentagemDesconto.text= "$percentualDesconto%"
 
     }
 }
