@@ -1,11 +1,14 @@
 package com.infnet.calc_salario_app
 
+import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.EditText
 import android.widget.TextView
 import calculaSalarioLiquido
+import java.io.File
 
 class ResultActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -24,6 +27,18 @@ class ResultActivity : AppCompatActivity() {
         txtTotalDesconto.text=totalDesconto
         txtPorcentagemDesconto.text= "$percentualDesconto%"
 
+
+
+    }
+
+//   chamar função no botão deletar arquivo
+    private fun deletaArquivo(fileName: String){
+
+        val file = File(filesDir, "$fileName.crd")
+
+        if(file.exists()){
+            file.delete()
+        }
     }
 }
 

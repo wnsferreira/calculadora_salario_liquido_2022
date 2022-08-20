@@ -1,4 +1,6 @@
 package com.infnet.calc_salario_app
+import android.content.Context
+import android.content.ContextParams
 import android.content.Intent
 import java.io.File
 import java.io.FileOutputStream
@@ -6,6 +8,7 @@ import java.util.*
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.Settings.ACTION_MANAGE_ALL_FILES_ACCESS_PERMISSION
 import android.util.Log
 import android.widget.Button
 import android.widget.EditText
@@ -25,54 +28,33 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-// --------------------------------------------------------------------------------------
-//  Função para criar o arquivo na memória interna
-    fun createFile(fileName: String){
-        val file = File(getExternalFilesDir(null), "$fileName.crd")
 
-        Log.i("TP1", "Arquivo $fileName carregado")
-
-        if(file.exists()){
-            file.delete()
-            Log.i("TP1", "Arquivo $fileName deletado")
-        }
-        else{
-            try {
-                val os: OutputStream = FileOutputStream(file)
-
-                os.write("Teste".toByteArray())
-                os.close()
-
-                Toast.makeText(this, "Coordenadas salvas", Toast.LENGTH_LONG).show()
-
-                Log.i("TP1", "Arquivo criado")
-            } catch (e: IOException) {
-                Log.d("Permissão", "Erro na criação")
-            }
-        }
-    }
-
-// --------------------------------------------------------------------------------------
-//
-
-        // Pedir permissão para gravar
-
-
-
-        // Criar novo arquivo ou gravar em arquivo já existente se o mesmo já existir
-        val fileName = "calc_salario_app_memo"
-        var file = File(getExternalFilesDir(null), "$fileName.crd")
-//        if (file == null) {
-//            file = createFile(fileName)}
+//        // Criar novo arquivo ou gravar em arquivo já existente se o mesmo já existir
+//        val fileName = "calc_salario_app_memo"
+//        var file = File(getExternalFilesDir(null), "$fileName.crd")
+////        if (file == null) {
+////            file = createFile(fileName)}
 
 
         val btnCalcular = this.findViewById<Button>(R.id.btnCalcular)
 
         btnCalcular.setOnClickListener{
 
+            // Pedir permissão para gravar
+
+            val permissao = ACTION_MANAGE_ALL_FILES_ACCESS_PERMISSION
+
+
+
             val salarioLiquido = calcularSalarioLiquido()
             val totalDescontos = calcularDescontos().toString()
             val percentualDesconto = calcularPercentualDesconto().toString()
+
+            val arquivo = "arquivo"
+            this.validarArquivoArmazenamento(arquivo)
+
+
+
 
             val resultIntent = Intent(this,ResultActivity::class.java)
             resultIntent.putExtra("salarioLiquido", salarioLiquido)
@@ -87,6 +69,45 @@ class MainActivity : AppCompatActivity() {
 
             // Botão para visualizar dados gravados no passado
     }
+
+
+
+
+    private fun validarArquivoArmazenamento(fileName: String){
+
+        val file = File(filesDir, "$fileName.crd")
+        val salarioLiquido = calcularSalarioLiquido()
+
+        Log.i("TP1", "Arquivo $fileName carregado")
+
+        if(file.exists()){
+//            file.delete()
+            Log.i("TP1", "Arquivo $fileName deletado")
+        }
+        else{
+            try {
+                val fos = this.openFileOutput("texto.txt", Context.MODE_APPEND)
+                val bytes = salarioLiquido.toByteArray()
+                val espaco = " / ".toByteArray()
+
+                fos.write(bytes)
+                fos.write(espaco)
+                fos.close()
+
+
+//                val os: OutputStream = FileOutputStream(file)
+//                os.write("Teste".toByteArray())
+//                os.close()
+//                Toast.makeText(this, "Dados salvas", Toast.LENGTH_LONG).show()
+//                Log.i("TP1", "Arquivo criado")
+            } catch (e: IOException) {
+                Log.d("Permissão", "Erro na criação")
+            }
+
+
+        }
+    }
+
 
     private  fun calcularSalarioLiquido(): String {
 
@@ -162,4 +183,6 @@ class MainActivity : AppCompatActivity() {
 
 
 }
+
+
 
