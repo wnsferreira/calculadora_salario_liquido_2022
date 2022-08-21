@@ -17,7 +17,7 @@ class ResultActivity : AppCompatActivity() {
 
         val txtSalarioLiquido = this.findViewById<TextView>(R.id.txtSalarioLiquido)
         val txtTotalDesconto = this.findViewById<TextView>(R.id.txtTotalDesconto)
-        val txtPorcentagemDesconto = this.findViewById<TextView>(R.id.txtPorcentagemDesconto)
+        val txtPorcentagemDesconto = this.findViewById<TextView>(R.id.txtPorcentagemDescontos)
 
 
         val salarioLiquido = intent.getStringExtra("salarioLiquido")
@@ -31,15 +31,6 @@ class ResultActivity : AppCompatActivity() {
 
     }
 
-//   chamar função no botão deletar arquivo
-    private fun deletaArquivo(fileName: String){
-
-        val file = File(filesDir, "$fileName.crd")
-
-        if(file.exists()){
-            file.delete()
-        }
-    }
 }
 
 

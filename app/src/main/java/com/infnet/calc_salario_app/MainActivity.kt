@@ -37,25 +37,17 @@ class MainActivity : AppCompatActivity() {
 
 
         val btnCalcular = this.findViewById<Button>(R.id.btnCalcular)
-
         btnCalcular.setOnClickListener{
 
             // Pedir permissão para gravar
 
             val permissao = ACTION_MANAGE_ALL_FILES_ACCESS_PERMISSION
-
-
-
             val salarioLiquido = calcularSalarioLiquido()
             val totalDescontos = calcularDescontos().toString()
             val percentualDesconto = calcularPercentualDesconto().toString()
 
             val arquivo = "arquivo"
             this.validarArquivoArmazenamento(arquivo)
-
-
-
-
             val resultIntent = Intent(this,ResultActivity::class.java)
             resultIntent.putExtra("salarioLiquido", salarioLiquido)
             resultIntent.putExtra("totalDescontos", totalDescontos)
@@ -64,6 +56,13 @@ class MainActivity : AppCompatActivity() {
             Log.i("TP7", "SalarioLiquido $salarioLiquido ")
 
             startActivity(resultIntent)
+        }
+
+        val btnApagar = this.findViewById<Button>(R.id.btnApagar)
+        btnApagar.setOnClickListener {
+            val arquivo = "arquivo"
+//            val file = File(filesDir, "$fileName.crd")
+            deletaArquivo(arquivo)
         }
 
 
@@ -87,8 +86,8 @@ class MainActivity : AppCompatActivity() {
         else{
             try {
                 val fos = this.openFileOutput("texto.txt", Context.MODE_APPEND)
-                val bytes = salarioLiquido.toByteArray()
-                val espaco = " / ".toByteArray()
+                val bytes = "Salário Liquido: $salarioLiquido".toByteArray()
+                val espaco = "\n".toByteArray()
 
                 fos.write(bytes)
                 fos.write(espaco)
@@ -181,6 +180,15 @@ class MainActivity : AppCompatActivity() {
         return  calcular
     }
 
+    //   chamar função no botão deletar arquivo
+    private fun deletaArquivo(fileName: String){
+
+        val file = File(filesDir, "$fileName.crd")
+
+        if(file.exists()){
+            file.delete()
+        }
+    }
 
 }
 
