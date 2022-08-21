@@ -1,53 +1,47 @@
 package com.infnet.calc_salario_app
-import android.content.Context
-import android.content.ContextParams
-import android.content.Intent
-import java.io.File
-import java.io.FileOutputStream
-import java.util.*
 
-import androidx.appcompat.app.AppCompatActivity
+import android.content.Context
+import android.content.Intent
+import android.os.Build
 import android.os.Bundle
-import android.provider.Settings.ACTION_MANAGE_ALL_FILES_ACCESS_PERMISSION
 import android.util.Log
 import android.widget.Button
 import android.widget.EditText
-import android.widget.TextView
 import android.widget.Toast
+import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AppCompatActivity
 import calculaIR
 import calculaInss
-import calculaSalarioLiquido
+import java.io.File
 import java.io.IOException
-import java.io.OutputStream
+import java.time.LocalDate
+import java.time.LocalTime
+import java.time.format.DateTimeFormatter
 import kotlin.math.round
 
 class MainActivity : AppCompatActivity() {
 
+    private val arquivo = "arquivo"
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-
-//        // Criar novo arquivo ou gravar em arquivo já existente se o mesmo já existir
-//        val fileName = "calc_salario_app_memo"
-//        var file = File(getExternalFilesDir(null), "$fileName.crd")
-////        if (file == null) {
-////            file = createFile(fileName)}
 
 
         val btnCalcular = this.findViewById<Button>(R.id.btnCalcular)
         btnCalcular.setOnClickListener{
 
             // Pedir permissão para gravar
+//            val permissao = ACTION_MANAGE_ALL_FILES_ACCESS_PERMISSION
 
-            val permissao = ACTION_MANAGE_ALL_FILES_ACCESS_PERMISSION
             val salarioLiquido = calcularSalarioLiquido()
             val totalDescontos = calcularDescontos().toString()
             val percentualDesconto = calcularPercentualDesconto().toString()
 
-            val arquivo = "arquivo"
-            this.validarArquivoArmazenamento(arquivo)
+
+            this.criarArquivoArmazenamento(arquivo)
+
             val resultIntent = Intent(this,ResultActivity::class.java)
             resultIntent.putExtra("salarioLiquido", salarioLiquido)
             resultIntent.putExtra("totalDescontos", totalDescontos)
@@ -60,45 +54,71 @@ class MainActivity : AppCompatActivity() {
 
         val btnApagar = this.findViewById<Button>(R.id.btnApagar)
         btnApagar.setOnClickListener {
-            val arquivo = "arquivo"
-//            val file = File(filesDir, "$fileName.crd")
+
             deletaArquivo(arquivo)
         }
 
-
-            // Botão para visualizar dados gravados no passado
     }
 
-
-
-
-    private fun validarArquivoArmazenamento(fileName: String){
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun criarArquivoArmazenamento(fileName: String){
 
         val file = File(filesDir, "$fileName.crd")
         val salarioLiquido = calcularSalarioLiquido()
 
-        Log.i("TP1", "Arquivo $fileName carregado")
+        val dataConsulta = LocalDate.now()
+        val formatacaoData: DateTimeFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy")
+        val dataFormatado: String = dataConsulta.format(formatacaoData)
+
+        var hora = LocalTime.now()
+        val formatacaoHora = DateTimeFormatter.ofPattern ("HH:mm:ss")
+        val horaFormatada: String = hora.format(formatacaoHora)
+
+        val txtQuantDependentes = this.findViewById<EditText>(R.id.txtQuantDependentes)
+        val txtPensaoAlimenticia = this.findViewById<EditText>(R.id.txtPensaoAlimenticia)
+        val txtPlanoSaude = this.findViewById<EditText>(R.id.txtPlanoSaude)
+        val txtOutrosDescontos = this.findViewById<EditText>(R.id.txtOutrosDescontos)
+
+        var pensaoAlimenticia = txtPensaoAlimenticia.text.toString().toFloatOrNull()
+        if (pensaoAlimenticia == null) {
+            pensaoAlimenticia = 0.0F
+        }
+        var quantDependentes = txtQuantDependentes.text.toString().toFloatOrNull()
+        if (quantDependentes == null) {
+            quantDependentes = 0.0F
+        }
+
+        val planoSaude = txtPlanoSaude.text.toString().toFloat()
+        val outrosDescontos = txtOutrosDescontos.text.toString().toFloat()
+
 
         if(file.exists()){
 //            file.delete()
-            Log.i("TP1", "Arquivo $fileName deletado")
+            Log.i("TP7", "Arquivo $fileName deletado")
         }
         else{
             try {
                 val fos = this.openFileOutput("texto.txt", Context.MODE_APPEND)
-                val bytes = "Salário Liquido: $salarioLiquido".toByteArray()
-                val espaco = "\n".toByteArray()
 
-                fos.write(bytes)
-                fos.write(espaco)
+                val dataConsultaBytes = "Data: $dataFormatado \n".toByteArray()
+                val horaConsultaBytes = "Hora da Consulta: $horaFormatada \n".toByteArray()
+                val salarioLiquidoBytes = "Salário Liquido: R$:$salarioLiquido \n".toByteArray()
+                val quantDependentesBytes = "Quantidade de dependentes: $quantDependentes \n".toByteArray()
+                val pensaoAlimenticiaBytes = "Pensão Alimenticia: R$:$pensaoAlimenticia \n".toByteArray()
+                val planoSaudeBytes = "Plano de saúde: R$:$planoSaude \n".toByteArray()
+                val outrosDescontosBytes = "Outros descontos: R$:$outrosDescontos \n".toByteArray()
+                val pularLinha = "\n".toByteArray()
+
+                fos.write(dataConsultaBytes)
+                fos.write(horaConsultaBytes)
+                fos.write(salarioLiquidoBytes)
+                fos.write(quantDependentesBytes)
+                fos.write(pensaoAlimenticiaBytes)
+                fos.write(planoSaudeBytes)
+                fos.write(outrosDescontosBytes)
+                fos.write(pularLinha)
                 fos.close()
 
-
-//                val os: OutputStream = FileOutputStream(file)
-//                os.write("Teste".toByteArray())
-//                os.close()
-//                Toast.makeText(this, "Dados salvas", Toast.LENGTH_LONG).show()
-//                Log.i("TP1", "Arquivo criado")
             } catch (e: IOException) {
                 Log.d("Permissão", "Erro na criação")
             }
@@ -130,14 +150,13 @@ class MainActivity : AppCompatActivity() {
             quantDependentes = 0.0F
         }
 
-        //calculo salário liquido
         val planoSaude = txtPlanoSaude.text.toString().toFloat()
         val outrosDescontos = txtOutrosDescontos.text.toString().toFloat()
 
         val inss = calculaInss(salarioBruto)
         val ir = calculaIR(salarioBruto)
         val salarioLiquido =
-            (salarioBruto - inss - ir - pensaoAlimenticia - (quantDependentes * 189.59F) - planoSaude - outrosDescontos).toString()
+            round(salarioBruto - inss - ir - pensaoAlimenticia - (quantDependentes * 189.59F) - planoSaude - outrosDescontos).toString()
 
         return salarioLiquido
 
@@ -151,7 +170,7 @@ class MainActivity : AppCompatActivity() {
         if (salarioBruto == null)
             salarioBruto = 0.0F
 
-        var salarioLiquido = calcularSalarioLiquido().toString().toFloatOrNull()
+        var salarioLiquido = calcularSalarioLiquido().toFloatOrNull()
         if (salarioLiquido == null)
             salarioLiquido = 0.0F
 
@@ -173,21 +192,31 @@ class MainActivity : AppCompatActivity() {
         if (salarioBruto == null)
             salarioBruto = 0.0F
 
-        var totalDesconto = calcularDescontos().toFloat()
+        val totalDesconto = calcularDescontos()
 
         val calcular = round((totalDesconto /salarioBruto) *100)
 
         return  calcular
     }
 
-    //   chamar função no botão deletar arquivo
     private fun deletaArquivo(fileName: String){
 
-        val file = File(filesDir, "$fileName.crd")
+//      O MODE_PRIVATE apaga os dados. Acredito não ser a forma correta. Mas foi a forma que consegui por enquanto.
+        val fos = this.openFileOutput("texto.txt", Context.MODE_PRIVATE)
+        fos.close()
 
-        if(file.exists()){
-            file.delete()
-        }
+        val file = this.deleteFile(arquivo)
+
+        Toast.makeText(this, "Dados apagados.", Toast.LENGTH_SHORT).show()
+
+//        if(file.exists()){
+//            fos.close()
+//            file.delete()
+//            Toast.makeText(this, "Arquivo deletado.", Toast.LENGTH_SHORT).show()
+//
+//        }else{
+//            Toast.makeText(this, "Arquivo não existe.", Toast.LENGTH_SHORT).show()
+//        }
     }
 
 }
