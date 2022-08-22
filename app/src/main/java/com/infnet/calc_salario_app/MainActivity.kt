@@ -35,21 +35,27 @@ class MainActivity : AppCompatActivity() {
             // Pedir permissão para gravar
 //            val permissao = ACTION_MANAGE_ALL_FILES_ACCESS_PERMISSION
 
-            val salarioLiquido = calcularSalarioLiquido()
-            val totalDescontos = calcularDescontos().toString()
-            val percentualDesconto = calcularPercentualDesconto().toString()
+            val txtSalarioBruto = this.findViewById<EditText>(R.id.txtSalarioBruto)
+            if (txtSalarioBruto.text.toString().isEmpty()) {
+                val msg = "Entre com o Valor do Salário Bruto"
+                Toast.makeText(this, msg, Toast.LENGTH_LONG).show()
+            }else {
+                val salarioLiquido = calcularSalarioLiquido()
+                val totalDescontos = calcularDescontos().toString()
+                val percentualDesconto = calcularPercentualDesconto().toString()
 
 
-            this.criarArquivoArmazenamento(arquivo)
+                this.criarArquivoArmazenamento(arquivo)
 
-            val resultIntent = Intent(this,ResultActivity::class.java)
-            resultIntent.putExtra("salarioLiquido", salarioLiquido)
-            resultIntent.putExtra("totalDescontos", totalDescontos)
-            resultIntent.putExtra("percentualDesconto", percentualDesconto)
+                val resultIntent = Intent(this,ResultActivity::class.java)
+                resultIntent.putExtra("salarioLiquido", salarioLiquido)
+                resultIntent.putExtra("totalDescontos", totalDescontos)
+                resultIntent.putExtra("percentualDesconto", percentualDesconto)
 
-            Log.i("TP7", "SalarioLiquido $salarioLiquido ")
+                Log.i("TP7", "SalarioLiquido $salarioLiquido ")
 
-            startActivity(resultIntent)
+                startActivity(resultIntent)
+            }
         }
 
         val btnApagar = this.findViewById<Button>(R.id.btnApagar)
@@ -150,8 +156,14 @@ class MainActivity : AppCompatActivity() {
             quantDependentes = 0.0F
         }
 
-        val planoSaude = txtPlanoSaude.text.toString().toFloat()
-        val outrosDescontos = txtOutrosDescontos.text.toString().toFloat()
+        var planoSaude = txtPlanoSaude.text.toString().toFloatOrNull()
+        if (planoSaude == null) {
+            planoSaude = 0.0F
+        }
+        var outrosDescontos = txtOutrosDescontos.text.toString().toFloatOrNull()
+        if (outrosDescontos == null) {
+            outrosDescontos = 0.0F
+        }
 
         val inss = calculaInss(salarioBruto)
         val ir = calculaIR(salarioBruto)
