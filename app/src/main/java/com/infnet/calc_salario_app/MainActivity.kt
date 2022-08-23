@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
@@ -21,7 +22,7 @@ import kotlin.math.round
 
 class MainActivity : AppCompatActivity() {
 
-    private val arquivo = "arquivo"
+    private val arquivo = "texto"
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -94,6 +95,9 @@ class MainActivity : AppCompatActivity() {
             quantDependentes = 0.0F
         }
 
+        val totalDescontos = calcularDescontos()
+        val porcentagemDescontos = calcularPercentualDesconto()
+
         val planoSaude = txtPlanoSaude.text.toString().toFloat()
         val outrosDescontos = txtOutrosDescontos.text.toString().toFloat()
 
@@ -113,6 +117,8 @@ class MainActivity : AppCompatActivity() {
                 val pensaoAlimenticiaBytes = "Pensão Alimenticia: R$:$pensaoAlimenticia \n".toByteArray()
                 val planoSaudeBytes = "Plano de saúde: R$:$planoSaude \n".toByteArray()
                 val outrosDescontosBytes = "Outros descontos: R$:$outrosDescontos \n".toByteArray()
+                val porcentagemDescontosBytes = "Porcentagem de descontos: $porcentagemDescontos% \n".toByteArray()
+                val totalDescontosBytes = "Total de Descontos: R$: $totalDescontos \n".toByteArray()
                 val pularLinha = "\n".toByteArray()
 
                 fos.write(dataConsultaBytes)
@@ -122,6 +128,8 @@ class MainActivity : AppCompatActivity() {
                 fos.write(pensaoAlimenticiaBytes)
                 fos.write(planoSaudeBytes)
                 fos.write(outrosDescontosBytes)
+                fos.write(porcentagemDescontosBytes)
+                fos.write(totalDescontosBytes)
                 fos.write(pularLinha)
                 fos.close()
 
@@ -213,22 +221,14 @@ class MainActivity : AppCompatActivity() {
 
     private fun deletaArquivo(fileName: String){
 
-//      O MODE_PRIVATE apaga os dados. Acredito não ser a forma correta. Mas foi a forma que consegui por enquanto.
-        val fos = this.openFileOutput("texto.txt", Context.MODE_PRIVATE)
-        fos.close()
+        val file = File(filesDir, "$fileName.txt")
+        if(file.exists()){
+            file.delete()
+            Toast.makeText(this, "Arquivo deletado.", Toast.LENGTH_SHORT).show()
 
-        val file = this.deleteFile(arquivo)
-
-        Toast.makeText(this, "Dados apagados.", Toast.LENGTH_SHORT).show()
-
-//        if(file.exists()){
-//            fos.close()
-//            file.delete()
-//            Toast.makeText(this, "Arquivo deletado.", Toast.LENGTH_SHORT).show()
-//
-//        }else{
-//            Toast.makeText(this, "Arquivo não existe.", Toast.LENGTH_SHORT).show()
-//        }
+        }else{
+            Toast.makeText(this, "Arquivo não existe.", Toast.LENGTH_SHORT).show()
+        }
     }
 
 }
