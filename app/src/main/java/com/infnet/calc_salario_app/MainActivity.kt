@@ -33,9 +33,6 @@ class MainActivity : AppCompatActivity() {
         val btnCalcular = this.findViewById<Button>(R.id.btnCalcular)
         btnCalcular.setOnClickListener{
 
-            // Pedir permissão para gravar
-//            val permissao = ACTION_MANAGE_ALL_FILES_ACCESS_PERMISSION
-
             val txtSalarioBruto = this.findViewById<EditText>(R.id.txtSalarioBruto)
             if (txtSalarioBruto.text.toString().isEmpty()) {
                 val msg = "Entre com o Valor do Salário Bruto"
