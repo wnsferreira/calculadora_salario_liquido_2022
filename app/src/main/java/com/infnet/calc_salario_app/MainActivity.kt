@@ -33,6 +33,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        supportActionBar?.hide()
+
         MobileAds.initialize(this)
         mAdView = this.findViewById(R.id.adView)
         val adRequest = AdRequest.Builder().build()
