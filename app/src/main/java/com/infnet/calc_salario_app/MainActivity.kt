@@ -13,21 +13,30 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import calculaIR
 import calculaInss
+import com.google.android.gms.ads.AdView
 import java.io.File
 import java.io.IOException
 import java.time.LocalDate
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 import kotlin.math.round
+import com.google.android.gms.ads.MobileAds
+import com.google.android.gms.ads.AdRequest
 
 class MainActivity : AppCompatActivity() {
 
     private val arquivo = "texto"
+    private lateinit var mAdView: AdView
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        MobileAds.initialize(this)
+        mAdView = this.findViewById(R.id.adView)
+        val adRequest = AdRequest.Builder().build()
+        mAdView.loadAd(adRequest)
 
 
         val btnCalcular = this.findViewById<Button>(R.id.btnCalcular)

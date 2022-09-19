@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "482667237086",
+    "project_id": "calc-salario-app-6e6ba",
+    "storage_bucket": "calc-salario-app-6e6ba.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:482667237086:android:52118c2f59ccc6bc443c4f",
+        "android_client_info": {
+          "package_name": "com.infnet.calc_salario_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "482667237086-kgdrjagt22d960daqlo2ki1at4594ve1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCd4o-Y5wC9-W4OE9p-LwdXdcU0TFvbctA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "482667237086-kgdrjagt22d960daqlo2ki1at4594ve1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
